@@ -202,6 +202,7 @@ void checkLineHit(){
 
 /*---------Ship Shoot-------------*/
 void shootBullet(int frame) {
+
   if ( key == ' ' && countBulletFrame>frame) {
     if (!ship.upGrade) {
       bList[bulletNum]= new Bullet(ship.posX, ship.posY, -3, 0);
@@ -232,7 +233,7 @@ void checkAlienDead() {
       Alien alien = aList[j];
       if (bullet != null && alien != null && !bullet.gone && !alien.die // Check Array isn't empty and bullet / alien still exist
       /*------------Hit detect-------------*/        ) {
- 
+ if(bList[i].bX==aList[j].aX&& bList[i].bY==aList[j].aY){
         /*-------do something------*/
         removeBullet(bullet);
         removeAlien(alien);
@@ -240,6 +241,7 @@ void checkAlienDead() {
   
     }
   }
+}
 }
 }
 /*---------Alien Drop Laser-----------------*/
