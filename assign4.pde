@@ -247,19 +247,20 @@ void checkAlienDead() {
 }
 /*---------Alien Drop Laser-----------------*/
 void alienShoot(int frame){
- Alien alien;  
  if(countLaserFrame==frame){
-     do{
+    for (int j=0; j<aList.length-1; j++) {
+      Alien alien = aList[j];
+   while(alien!=null && !alien.die){
         alien = aList[int(random(53))];
-      }while(!(alien!=null && !alien.die));
      for(int laserNum=0; laserNum<lList.length-1;laserNum++) {
-    if(laserNum<30){
-      lList[laserNum++]= new Laser(alien.aX,alien.aY);
-      countLaserFrame=0;     
+      lList[laserNum++]= new Laser(alien.aX,alien.aY);    
    }
+   }
+    }
+    countLaserFrame=0; 
 }
  }
-}
+
 /*---------Check Laser Hit Ship-------------*/
 void checkShipHit() {
   for (int i=0; i<lList.length-1; i++) {
