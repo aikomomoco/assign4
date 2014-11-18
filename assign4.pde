@@ -76,6 +76,7 @@ void draw() {
     drawBullet();
     drawLaser();
     ship.keyTyped();
+    
     /*---------Call functions---------------*/
 
 
@@ -136,8 +137,8 @@ void keyPressed() {
 void alienMaker(int alienNum,int numInRow) {
   aList[0]= new Alien(50,50);
       for (int i=0; i < alienNum; ++i){
-    int row = i / numInRow;
-    int col = i % numInRow;
+    int row =int (i / numInRow);
+    int col =int (i % numInRow);
     int posX=50+col*40;
     int posY=50+row*50;
      aList[i]= new Alien(posX,posY);
@@ -234,6 +235,7 @@ void checkAlienDead() {
       Alien alien = aList[j];
       if (bullet != null && alien != null && !bullet.gone && !alien.die // Check Array isn't empty and bullet / alien still exist
       /*------------Hit detect-------------*/        ) {
+   
         /*-------do something------*/
         removeBullet(bullet);
         removeAlien(alien);
