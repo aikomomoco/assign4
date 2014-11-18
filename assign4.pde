@@ -15,7 +15,7 @@ int point;               //Game Score
 int expoInit;            //Explode Init Size
 int countBulletFrame;    //Bullet Time Counter
 int bulletNum;           //Bullet Order Number
-
+int countLaserFrame;
 /*--------Put Variables Here---------*/
 
 void printText(String title,String subtitle,int posY){
@@ -76,7 +76,7 @@ void draw() {
     drawBullet();
     drawLaser();
     ship.keyTyped();
-    
+   
     /*---------Call functions---------------*/
 
 
@@ -145,9 +145,6 @@ void alienMaker(int alienNum,int numInRow) {
 }
 }
   
-
-
-
 void drawLife() {
   fill(230, 74, 96);
   text("LIFE:", 36, 455);
@@ -235,7 +232,7 @@ void checkAlienDead() {
       Alien alien = aList[j];
       if (bullet != null && alien != null && !bullet.gone && !alien.die // Check Array isn't empty and bullet / alien still exist
       /*------------Hit detect-------------*/        ) {
-   
+ 
         /*-------do something------*/
         removeBullet(bullet);
         removeAlien(alien);
@@ -246,17 +243,17 @@ void checkAlienDead() {
 }
 }
 /*---------Alien Drop Laser-----------------*/
-void alienShoot(){
-  for (int i=0; i<lList.length-1; i++) {
-    Laser laser = lList[i];
-if (frameRate==50){
-  int a=int (random(aList.length-1));
-   Alien alien = aList[a];
-  if (alien!=null && !alien.die){
-lList[i]= new Laser( aList[a].aX , aList[a].aY);
-  }
- }
-}
+void alienShoot(int frame){
+ Alien alien;  
+ if(countLaserFrame==frame){
+     do{
+        alien = aList[int(random(53))];
+      }while(!(alien!=null && !alien.die));
+     int laserNum=lList.length-1;
+    laserNum=(laserNum>=bList.length-2?0:laserNum);
+      lList[laserNum++]= new Laser(alien.aX,alien.aY);
+      countLaserFrame=0;     
+   }
 }
 
 /*---------Check Laser Hit Ship-------------*/
@@ -265,7 +262,7 @@ void checkShipHit() {
     Laser laser = lList[i];
     if (laser!= null && !laser.gone // Check Array isn't empty and laser still exist
     /*------------Hit detect-------------*/      ) {
-    alienShoot();
+    alienShoot(50);
 
 
       /*-------do something------*/
