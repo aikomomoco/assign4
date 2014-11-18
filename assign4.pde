@@ -16,6 +16,7 @@ int expoInit;            //Explode Init Size
 int countBulletFrame;    //Bullet Time Counter
 int bulletNum;           //Bullet Order Number
 int countLaserFrame;
+int life;
 /*--------Put Variables Here---------*/
 
 void printText(String title,String subtitle,int posY){
@@ -48,7 +49,7 @@ point=0;
 
   ship = new Ship(width/2, 460, 3);
   ruby = new PowerUp(int(random(width)), -10);
-
+life=3;
   reset();
 }
 
@@ -76,7 +77,7 @@ void draw() {
     drawBullet();
     drawLaser();
     ship.keyTyped();
-   
+  
     /*---------Call functions---------------*/
 
 
@@ -251,13 +252,14 @@ void alienShoot(int frame){
      do{
         alien = aList[int(random(53))];
       }while(!(alien!=null && !alien.die));
-     int laserNum=lList.length-1;
-    laserNum=(laserNum>=bList.length-2?0:laserNum);
+     for(int laserNum=0; laserNum<lList.length-1;laserNum++) {
+    if(laserNum<30){
       lList[laserNum++]= new Laser(alien.aX,alien.aY);
       countLaserFrame=0;     
    }
 }
-
+ }
+}
 /*---------Check Laser Hit Ship-------------*/
 void checkShipHit() {
   for (int i=0; i<lList.length-1; i++) {
@@ -272,8 +274,17 @@ void checkShipHit() {
 }
 }
 /*---------Check Win Lose------------------*/
-
-
+void checkWinLose(){
+  for(int i=0;i<aList.length-1;i++){
+        Alien alien = aList[i];
+  if(aList[i].aY>=420||life==0){
+    status=4;
+  }
+  if(!(alien!=null && !alien.die)){
+     status=3;
+  }
+}
+}
 void winAnimate() {
   int x = int(random(128))+70;
   fill(x, x, 256);
